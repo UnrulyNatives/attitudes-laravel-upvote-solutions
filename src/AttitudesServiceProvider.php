@@ -22,8 +22,11 @@ class AttitudesServiceProvider extends ServiceProvider
         // publish  migrations to the app's app/Http/Controllers folder
             __DIR__.'/attitudes_model' => base_path('app/Models'),
 
+        // publish  templates to vote models
+            __DIR__.'/attitudes_views' => base_path('resources/views/userattitudes'),
+
         // publish  migrations to the app's app/Http/Controllers folder
-            __DIR__.'/attitudes_controller' => base_path('app/Http/Controller'),
+            __DIR__.'/attitudes_controller' => base_path('app/Http/Controllers'),
 
         // publish  Models to the app's app/Http/Controllers folder
             __DIR__.'/attitudes_migrations' => base_path('database/migrations'),
