@@ -2,13 +2,13 @@
 
 This package contains several solutions. Pick and use the one which fits your needs.
 
-Current version: 0.0.2 (pre-release) 
+Current version: 0.0.3 (pre-release) 
 
 ## Installation
 
 1. Add this line to your 'composer.json`
 
-`"unrulynatives/attitudes": "0.0.2"`
+`"unrulynatives/attitudes": "0.0.3"`
 
 2. register the service provider in `config/app.php`.
 
