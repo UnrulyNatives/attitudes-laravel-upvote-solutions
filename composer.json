@@ -1,0 +1,36 @@
+{
+   "name":"unrulynatives/helpers",
+   "description":"Laravel 5  helpers to use across all Laravel projects",
+   "keywords":[
+      "laravel",
+      "laravel5",
+      "helper"
+   ],
+   "homepage":"https://development.unrulynatives.com",
+   "license":"MIT",
+   "authors":[
+      {
+         "name": "Piotr Plebaniak",
+         "email": "peter.gavagai@gmail.com",
+         "role":"Developer"
+      }
+   ],
+   "require":{
+      "php":">=5.4.0",
+      "illuminate/support":"~5.0",
+      "thomaswelton/gravatarlib":"0.1.x"
+   },
+   "require-dev":{
+      "phpunit/phpunit":"4.8.*",
+      "mockery/mockery":"0.9.*"
+   },
+    "autoload": {
+        "psr-4": {
+            "Unrulynatives\\Attitudes\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "jenssegers/date": "^3.2@dev"
+    }
+}
