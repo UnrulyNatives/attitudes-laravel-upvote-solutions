@@ -4,6 +4,7 @@ namespace UnrulyNatives\Attitudes;
  
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use App\Models\Feature;
  
 class AttitudesController extends Controller
 {
@@ -27,6 +28,18 @@ class AttitudesController extends Controller
     {
 
         return view('attitudes::docs', compact('current_time'));
+    }
+
+
+    public function demo($timezone = NULL)
+    {
+        $current_time = ($timezone)
+            ? Carbon::now(str_replace('-', '/', $timezone))
+            : Carbon::now();
+
+        $features = Feature::all();
+
+        return view('userattitudes.feature.index', compact('current_time','features'))->with('itemkind', 'features');
     }
 
 

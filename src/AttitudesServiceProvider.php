@@ -30,6 +30,13 @@ class AttitudesServiceProvider extends ServiceProvider
 
         // publish  Models to the app's app/Http/Controllers folder
             __DIR__.'/attitudes_migrations' => base_path('database/migrations'),
+
+        // Public
+            __DIR__.'/../public' => public_path(''),
+
+
+
+
         ]);
 
 

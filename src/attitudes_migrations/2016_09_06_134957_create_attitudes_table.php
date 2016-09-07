@@ -22,7 +22,7 @@ class CreateAttitudesTable extends Migration
             $table->integer('importance');
             $table->boolean('attitude')->nullable();
             $table->boolean('activated')->nullable()->default(1);
-            $table->integer('bookmark_id')->nullable()->default(1);
+            $table->integer('favoritetype_id')->nullable()->default(1);
             $table->text('user_notes', 65535)->nullable();
 
             $table->integer('creator_id')->unsigned()->index('creator_id');

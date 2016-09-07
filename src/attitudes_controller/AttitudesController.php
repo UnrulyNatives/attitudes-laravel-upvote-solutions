@@ -59,18 +59,7 @@ class AttitudesController extends Controller
         $object->attitude = $value;
         $object->save();
 
-        if($itemtype == 'exemplar') {
-            // saving new exemplar as active
-            Session::put('active_exemplar', $model);
-            Cookie::queue(Cookie::forever('active_exemplar', $model));
 
-            if (Auth::check()) {
-                $ae = UserWorkspace::where('user_id', '=', Auth::id())->first();
-                $ae->active_exemplar = $id;
-                $ae->save();
-            }
-
-        }
 
         //        return Response::json(['status' => true]);
         return Response::json();
@@ -118,29 +107,6 @@ class AttitudesController extends Controller
 
 
 
-    public function collect($itemkind, $importance, $attitude, $param1, $param2, $param3, $maxcount=null, $sorting='created_at') {
-
-        if($maxcount == '' || $maxcount == 'all') {
-            $maxcount = 1000;
-        }
-        if($itemkind == 'questions') {
-            $object = Question::
-                // limit($param2)->
-                paginate($maxcount);
-
-        } else {
-            $object = Entitystandpoint::where('question_id',93)->get();
-            // $question = Question::find($maxcount);
-
-        }
-
-
-        // return "DEV Resp in Controller Widzisz ". $object->count() . " obiektów typu ".$itemkind.". Importance: ". $importance . "; attitude: ". $attitude . "; par 1: " . $param1 .  "-; par 2: " . $param2 .  "- par 3: " . $param3 . "- maxcount: " . $maxcount . " Sorting: " . $sorting;
-
-
-
-        return View::make('abstracted._collection_judgable', compact('object', 'itemkind','importance','attitude','param1','param2','param3','maxcount','sorting'));
-    }
 
 
 
