@@ -4,8 +4,8 @@ This package delivers several solutions. Pick and use all or the one which meets
 
 
 
-Current version: 0.0.5 (pre-release) 
-
+Current version: 
+[![Latest Stable Version](https://poser.pugx.org/unrulynatives/attitudes-laravel-upvote-solutions/v/stable)](https://packagist.org/packages/unrulynatives/attitudes-laravel-upvote-solutions)
 
 
 ## Features
@@ -28,11 +28,11 @@ Three different values available for storing likes and upvotes
 
 1. Add this line to your 'composer.json`
 
-`"unrulynatives/attitudes": "0.0.5"`
+`"unrulynatives/attitudes": "0.*"`
 
 2. register the service provider in `config/app.php`.
 
-3. Update your `User.php` model with this package's trait.
+3. Update your `User.php` model with this package's trait. (currently in non-working condition!)
 
 Add these two functions (this package's trait is still not developed, contributors welcome!)
 ```
@@ -44,6 +44,14 @@ Add these two functions (this package's trait is still not developed, contributo
     public function attitudes() {
         return $this->hasMany(\App\Models\Userattitude::class, 'creator_id');
     }
+
+
+    public function user_approach($user)
+    {
+        return $this->morphMany(\App\Models\Userattitude::class, 'item')->where('creator_id', ($user ? $user->id : NULL))->first();
+    }
+
+
         
 
 ```
@@ -114,3 +122,4 @@ An online demo is available at http://dev.unrulynatives.com/attitudes-demo
 ## Help and documentation
 
 point your browser to `attitudes-docs` to see instructions. If you cannot see the docs, then you have a problem to solve. Good luck!
+After you use the `publish` command, the file will be located at `resources/views/userattitudes/features/index.blade.php`
