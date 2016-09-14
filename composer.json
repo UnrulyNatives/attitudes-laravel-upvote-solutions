@@ -30,8 +30,5 @@
             "Unrulynatives\\Attitudes\\": "src/"
         }
     },
-    "minimum-stability": "dev",
-    "require": {
-        "jenssegers/date": "^3.2@dev"
-    }
+    "minimum-stability": "dev"
 }
