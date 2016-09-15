@@ -13,9 +13,9 @@
       @endunless
 
 
-        @include('abstracted._userattitudes_attitude_toggle_abstracted', ['itemkind' => $itemkind,'o' => $object, 'attitude' => (($cua = $o->user_approach(Auth::user())) ? $cua->attitude : NULL)])
+        @include('userattitudes._userattitudes_attitude_toggle_abstracted', ['itemkind' => $itemkind,'o' => $object, 'attitude' => (($cua = $o->user_approach(Auth::user())) ? $cua->attitude : NULL)])
 
-        @include('abstracted._userattitudes_importance_toggle_abstracted', ['itemkind' => $itemkind,'o' => $object, 'importance' => (($cua = $o->user_approach(Auth::user())) ? $cua->importance : NULL)])
+        @include('userattitudes._userattitudes_importance_toggle_abstracted', ['itemkind' => $itemkind,'o' => $object, 'importance' => (($cua = $o->user_approach(Auth::user())) ? $cua->importance : NULL)])
 
     @if(isset($header3))
       <h4>{{$header3}}</h4>

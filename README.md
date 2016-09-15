@@ -32,9 +32,26 @@ Three different values available for storing likes and upvotes
 
 2. register the service provider in `config/app.php`.
 
+    
+
 3. Update your `User.php` model with this package's trait. (currently in non-working condition!)
 
-Add these two functions (this package's trait is still not developed, contributors welcome!)
+
+
+```
+
+    
+    public function importances() {
+        return $this->hasMany(\App\Models\Userattitude::class, 'creator_id');
+    }
+    
+    public function attitudes() {
+        return $this->hasMany(\App\Models\Userattitude::class, 'creator_id');
+    }
+
+```
+
+Add these  functions to your model, in which you wish to use voting system (this package's trait is still not developed, contributors welcome!)
 ```
     
     public function importances() {
@@ -58,11 +75,11 @@ Add these two functions (this package's trait is still not developed, contributo
 
 4. Publish migrations, views, controller and other assets from this package into your Laravel app:
 
-`php artisan vendor:publish --provider="Unrulynatives\Attitudes\AttitudesServiceProvider"`
+`php artisan vendor:publish --provider="Unrulynatives\Attitudes\AttitudesServiceProvider" --force`
 
 Now run the migrations with command `php artisan migrate`. Verify that the table `userattitudes` was created.
 
-5. Update your models with this package's trait.
+5. (unfinished) Update your models with this package's trait.
 
 The trait is under development. For now just paste the below functions to your models:
 
@@ -87,9 +104,26 @@ The trait is under development. For now just paste the below functions to your m
 
 
 ```
+6. Routes (optional)
 
+Properly working routes necessary to service voting are locatad within ths package:
 
-7. Include the below view files in your `foreach` loop. Note that the looped variable should be changed accordingly. Here I use `$o->`.
+```
+Route::any('{itemkind}/{id}/set_user_attitude', ['as' => 'attitudes.set_user_attitude', 'uses' => 'AttitudesController@set_user_attitude']);
+Route::any('{itemkind}/{id}/set_user_importance', ['as' => 'attitudes.set_user_importance', 'uses' => 'AttitudesController@set_user_importance']);
+```
+
+You can put them in your location of choice
+
+7. Attach the js and css files to your template. Mind the file paths if you decide to place them somewhere else than they are published to.
+
+```
+<link href="{{URL::to('css/unrulynatives_attitudes.css')}}" rel="stylesheet">
+
+<script type="text/javascript" src="{{URL::to('js/minitool_attitudes.js')}}"></script>
+```
+
+8. Include the below view files in your `foreach` loop. Note that the looped variable should be changed accordingly. Here I use `$o->`.
 
 ```
 	$itemkind = 'features'; // features is a name of your model
@@ -107,9 +141,9 @@ Do it in `app\Providers\AppServiceProvider.php`. Use the instructions in https:/
 
 
 
-8. That's it! Now  user choices should be stored in the database table `userattitudes`.
+9. That's it! Now  user choices should be stored in the database table `userattitudes`.
 
-9. Working demo. 
+10. Working demo. 
 
 If you installed this package correctly, point your browser to `attitudes-demo`.
 - You should be logged in
