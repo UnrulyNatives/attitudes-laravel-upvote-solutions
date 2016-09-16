@@ -1,4 +1,4 @@
-@extends('unstarter.layouts.master_bootstrap_scaffold')
+@extends('unattitudes.layouts.master_bootstrap_scaffold')
 
 
 @section('content')
@@ -9,68 +9,52 @@
             <p>You need to be logged in in order to see the feature work</p>
 
        @if(Auth::check())
-       logged correctly!
+       <a href="{{URL::to('login')}}" class="btn btn-success">logged correctly!</a>
        @else
        not logged
+       <a href="{{URL::to('login')}}" class="btn btn-danger">Login</a>
        @endif
 
         </div>
 
-            <h1>Feature Index:</h1>
-            <form class = 'col s3' method = 'get' action = '{{url("feature")}}/create'>
-                <button class = 'btn btn-primary' type = 'submit'>Create New Feature</button>
+            <h1>Attitudes Demo:</h1>
+            <form class = 'col s3' method = 'get' action = '{{url("quote")}}/create'>
+                <button class = 'btn btn-primary' type = 'submit'>Create New Quote</button>
             </form>
-            <br>
-            
-            <br>
-            <table class = "table table-striped table-bordered">
-                <thead>
-                    
-                    <th>name</th>
-                    
-                    <th>description</th>
-                    
-                    <th>demonstration_URL</th>
-                    
-                    
-                    <th>actions</th>
-                    <th>Attitudes package</th>
-                </thead>
-                <tbody>
-                    @foreach($features as $o)
-                    <tr>
-                        
-                        <td>{{$o->name}}</td>
-                        
-                        <td>{{$o->description}}</td>
-                        
-                        <td>{{$o->demonstration_URL}}
+        <div class="communique-info communique-cleared" id="">
+            <h4>New quotes</h4>
+            <p>New quotes are added in the package's controller. </p>
 
-                            @includeif('starter.features.'.$o->id)
+       @if(Auth::check())
+       <a href="{{URL::to('login')}}" class="btn btn-success">logged correctly!</a>
+       @else
+       not logged
+       <a href="{{URL::to('login')}}" class="btn btn-danger">Login</a>
+       @endif
 
-                        </td>
-                        
-                        
-                        <td>
-                                <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/feature/{{$o->id}}/deleteMsg" ><i class = 'material-icons'>delete</i></a>
-                                <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/feature/{{$o->id}}/edit'><i class = 'material-icons'>edit</i></a>
-                                <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/feature/{{$o->id}}'><i class = 'material-icons'>info</i></a>
-                        </td>
-                        
-                        <td>
+        </div>
 
 
-                        @include('userattitudes._userattitudes_attitude_toggle_abstracted', ['itemkind' => $itemkind,'o' => $o, 'attitude' => (($cua = $o->user_approach(Auth::user())) ? $cua->attitude : NULL)])
+<div class="un_container csch_dark_1 csch_subtle3">
+@foreach($object as $q)
+                   
+           <div class="un_object csch_subtle2 un_flex un_flex_hs">             
+                        <td>#{{$q->id}} {{$q->text}}</td>
+                        
 
-                        @include('userattitudes._userattitudes_importance_toggle_abstracted', ['itemkind' => $itemkind,'o' => $o, 'importance' => (($cua = $o->user_approach(Auth::user())) ? $cua->importance : NULL)])
+                        
+                        <div class="un_choice">
+
+
+                        @include('userattitudes._userattitudes_attitude_toggle_abstracted', ['itemkind' => 'quotes','o' => $q, 'attitude' => (($cua = $q->user_approach(Auth::user())) ? $cua->attitude : NULL)])
+
+                        @include('userattitudes._userattitudes_importance_toggle_abstracted', ['itemkind' => 'quotes','o' => $q, 'importance' => (($cua = $q->user_approach(Auth::user())) ? $cua->importance : NULL)])
 
             
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                     @endforeach
-                </tbody>
-            </table>
-
+                    </div>
 
 @stop        
 
@@ -85,7 +69,9 @@
 
 @endpush
 @push('scripts_in_tail')
+    
+    {!! Html::script('js/laravel-ujs.js') !!}
 
-<script type="text/javascript" src="{{URL::to('js/minitool_attitudes.js')}}"></script>
+    <script type="text/javascript" src="{{URL::to('js/minitool_attitudes.js')}}"></script>
 
 @endpush

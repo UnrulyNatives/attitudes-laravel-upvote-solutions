@@ -17,27 +17,56 @@ class AttitudesServiceProvider extends ServiceProvider
 
 
         $this->publishes([
-            __DIR__.'/views' => base_path('resources/views/vendor/unrulynatives/attitudes'),
 
         // publish  migrations to the app's app/Http/Controllers folder
             __DIR__.'/attitudes_model' => base_path('app/Models'),
 
-        // publish  templates to vote models
-            __DIR__.'/attitudes_views' => base_path('resources/views/userattitudes'),
 
-        // publish  migrations to the app's app/Http/Controllers folder
+        // publish  controllers to the app's app/Http/Controllers folder
             __DIR__.'/attitudes_controller' => base_path('app/Http/Controllers'),
 
-        // publish  Models to the app's app/Http/Controllers folder
-            __DIR__.'/attitudes_migrations' => base_path('database/migrations'),
 
+
+        ], 'app');
+
+
+
+        // publishing the basic views
+        $this->publishes([
+        // publish  templates to your `resources/views` location
+            __DIR__.'/attitudes_views' => base_path('resources/views/userattitudes'),
+
+            __DIR__.'/views' => base_path('resources/views/vendor/unrulynatives/attitudes'),
+        ], 'views');
+
+
+
+
+
+
+        $this->publishes([
+        // publish migrations for all registered packages 
+            __DIR__.'/unstarter_migrations' => base_path('database/migrations')
+
+
+        ], 'migrations');
+
+
+        $this->publishes([
+            // publish seeds for all registered packages 
+            __DIR__.'/unstarter_seeds' => base_path('database/seeds'),
+        ], 'seeds');
+
+
+        $this->publishes([
+        // publish  public folder content: css and js
         // Public
             __DIR__.'/../public' => public_path(''),
+        ], 'publicassets');
 
 
 
 
-        ]);
 
 
 

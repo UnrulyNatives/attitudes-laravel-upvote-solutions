@@ -1,11 +1,14 @@
-# A complete upvote and downvote solution
+# This is a complete upvote and downvote solution for Laravel >= 5.3 application
 
-This package delivers several solutions. Pick and use all or the one which meets your needs. 
+This package delivers several solutions working in the same BD table. Pick and use all or the one which meets your needs. 
 
 
 
 Current version: 
 [![Latest Stable Version](https://poser.pugx.org/unrulynatives/attitudes-laravel-upvote-solutions/v/stable)](https://packagist.org/packages/unrulynatives/attitudes-laravel-upvote-solutions)
+
+
+Note: while the package does the job perfectly now, please give me some time to make the code look more professional. Contributors welcome!
 
 
 ## Features
@@ -81,7 +84,7 @@ Now run the migrations with command `php artisan migrate`. Verify that the table
 
 5. (unfinished) Update your models with this package's trait.
 
-The trait is under development. For now just paste the below functions to your models:
+This package's trait is still under development. For now just paste the below functions to the models for which you wish to enable:
 
 ```
 
@@ -106,14 +109,15 @@ The trait is under development. For now just paste the below functions to your m
 ```
 6. Routes (optional)
 
-Properly working routes necessary to service voting are locatad within ths package:
+Properly working routes necessary for this package to work are locatad within ths package:
 
 ```
 Route::any('{itemkind}/{id}/set_user_attitude', ['as' => 'attitudes.set_user_attitude', 'uses' => 'AttitudesController@set_user_attitude']);
 Route::any('{itemkind}/{id}/set_user_importance', ['as' => 'attitudes.set_user_importance', 'uses' => 'AttitudesController@set_user_importance']);
 ```
 
-You can put them in your location of choice
+You can put them in your location of choice, but make sure that the new location is parsed first. In case of problems, reverse the order of service providers of this package and `App\Providers\RouteServiceProvider::class,`
+
 
 7. Attach the js and css files to your template. Mind the file paths if you decide to place them somewhere else than they are published to.
 
@@ -126,7 +130,7 @@ You can put them in your location of choice
 8. Include the below view files in your `foreach` loop. Note that the looped variable should be changed accordingly. Here I use `$o->`.
 
 ```
-	$itemkind = 'features'; // features is a name of your model
+    <?php $itemkind = 'quotes'; ?> // features is a name of your model
     @include('userattitudes._userattitudes_attitude_toggle_abstracted', ['itemkind' => $itemkind,'o' => $o, 'attitude' => (($cua = $o->user_approach(Auth::user())) ? $cua->attitude : NULL)])
 
     @include('userattitudes._userattitudes_importance_toggle_abstracted', ['itemkind' => $itemkind,'o' => $o, 'importance' => (($cua = $o->user_approach(Auth::user())) ? $cua->importance : NULL)])
@@ -135,15 +139,37 @@ You can put them in your location of choice
 ```
 Note: `itemkind` is plural lovercase name of your model. Take a look at the controller function: the `itemkind` name is changed into class name in order to process your request.
 
-Note 2: The models which are attituded should have the morph class defined. The names are stored in the DB table `userattitudes` in column `item_type`.
+9. Define the morph class
+The models which are attituded should have the morph class defined. The names are stored in the DB table `userattitudes` in column `item_type`.
 I myself define the morph class definitions manually, just to be sure that Laravel functions won't use some unusual defaults. 
 Do it in `app\Providers\AppServiceProvider.php`. Use the instructions in https://laravel.com/docs/5.3/upgrade.
 
 
+For this package to work with predefined example, open the file and inside the 
+put the following code:
 
-9. That's it! Now  user choices should be stored in the database table `userattitudes`.
+```
+use Illuminate\Database\Eloquent\Relations\Relation;
 
-10. Working demo. 
+// ...
+
+    public function boot()
+    {
+
+        Relation::morphMap([
+            'user' => User::class,
+            'quotation' => \App\Models\UnAQuotation::class,
+        ]);
+    }
+```
+
+10. Define a csrf token
+Be sure that the head of your page contains the below declaration, otherwise you will meet with unexpected behavior of the script:
+`<meta name="csrf-token" content="{{ csrf_token() }}" />`
+
+11. That's it! Now  user choices should be stored in the database table `userattitudes`.
+
+12. Working demo. 
 
 If you installed this package correctly, point your browser to `attitudes-demo`.
 - You should be logged in
