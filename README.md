@@ -4,11 +4,13 @@ This is a complete upvote and downvote solution for Laravel >= 5.3 application.
 
 Contributors welcome. Any feature suggestions? Submit an issue.
 
-- Allows upvoting & downvoting, records short notes by the voting user
+- Allows upvoting & downvoting, 
+- records memos (comments) by the voting user in the same table
 - Allows migration of data from `rtconner/laravel-likeable`
-
+- allows assigning objects to favorite categories (only one per voted object though)
 
 Current version: 
+
 [![Latest Stable Version](https://poser.pugx.org/unrulynatives/attitudes/v/stable)](https://packagist.org/packages/unrulynatives/attitudes)
 
 [![Total Downloads](https://poser.pugx.org/unrulynatives/attitudes/downloads)](https://packagist.org/packages/unrulynatives/attitudes)
@@ -16,17 +18,17 @@ Current version:
 
 ## Features
 
-- This package delivers several solutions working in the same DB table. Pick and use all or the one which meets your needs. Three different values available for storing likes and upvotes
+- This package delivers several solutions working in the same DB table. Pick and use all or the one which meets your needs. Three different values available for storing likes and upvotes.
 
-- `importance` - might be used for observing and prioritizing content with values from range `0` to `10`.
+- `importance` - might be used for observing and prioritizing content with values from range `0` to `10`, or just any.
 
-- `attitude` - might store values `-1`, `0`, `1` for likes and dislikes. The scope of the values upt o developer's solution.
+- `attitude` - might store values `-1`, `0`, `1` for likes and dislikes. The scope of the values can be decided by developer, e. `-2` for hate and `-3` for going Berserk over the object is possible.
 
 - `activated` - might store values `-1`, `0`, `1` for content filtering features.
 
 - `favoritetype_id` - Just a scaffold for future development. An item might be stored in favorites under a certain subcategory. `null` would mean the root folder. This feature would require an extra model `Favoritetype`.
 
-- `user_notes` - allows user to take notes concerning a model (still to do)
+- `user_notes` - allows user to take notes concerning a model (still to do).
 
 
 ## To do
@@ -38,17 +40,18 @@ Current version:
 
 
 ## Conntributing
- while the package does the job perfectly now, please give me some time to make the code look more professional. Contributors welcome!
+ While the package does the job perfectly now, please give me some time to make the code look more professional. Contributors welcome!
 
 
 ## Installation
 
 1. Add this line to your 'composer.json`
 
-`"unrulynatives/attitudes": "0.*"`
+`"unrulynatives/attitudes": "^1.0"`
 
 2. register the service provider in `config/app.php`.
 
+    `Unrulynatives\Attitudes\AttitudesServiceProvider::class,`
     
 
 3. Update your `User.php` model with this package's trait. (currently in non-working condition!)
