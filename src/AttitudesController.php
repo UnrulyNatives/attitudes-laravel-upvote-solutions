@@ -106,28 +106,34 @@ class AttitudesController extends Controller
                     $overwrite_warning = 1;
                 }
 
-                    // migrate data from counters table
-                    // in this place the counters will migrate even if the likeables are overwritten
-                    $counters = DB::table('likeable_like_counters')->get();
-                    foreach($counters as $c) {
-                        $counter = DB::table('userattitudes_counters')->where('item_id',$c->likeable_id)->where('item_type',$c->likeable_type)->first();
-                        if(!$counter) {
-                            DB::table('userattitudes_counters')->insert(['item_id' => $c->likeable_id, 'item_type' => $c->likeable_type, 'count' => $c->count]);
 
-                        } else {
-
-                            $present_count = $counter->count;
-                            $migrated_count = $c->count;
-                            $sum_of_counts = $present_count + $migrated_count;
-                            DB::table('userattitudes_counters')->insert(['item_id' => $c->likeable_id, 'item_type' => $c->likeable_type, 'count' => $sum_of_counts]);
-
-                            unset($sum_of_counts); // just in case
-                        }
-                    
-                    } 
 
 
            }
+        }
+
+
+        $docounters = Input::get('docounters');
+        if(isset($docounters) && $docounters = 1) {
+
+            // migrate data from counters table
+            // in this place the counters will migrate even if the likeables are overwritten
+            $counters = DB::table('likeable_like_counters')->get();
+            foreach($counters as $c) {
+                $counter = DB::table('userattitudes_counters')->where('item_id',$c->likeable_id)->where('item_type',$c->likeable_type)->first();
+                if(!$counter) {
+                    DB::table('userattitudes_counters')->insert(['item_id' => $c->likeable_id, 'item_type' => $c->likeable_type, 'count' => $c->count]);
+
+                } else {
+
+                    $present_count = $counter->count;
+                    $migrated_count = $c->count;
+                    $sum_of_counts = $present_count + $migrated_count;
+                    DB::table('userattitudes_counters')->insert(['item_id' => $c->likeable_id, 'item_type' => $c->likeable_type, 'count' => $sum_of_counts]);
+
+                    unset($sum_of_counts); // just in case
+                }
+            } 
         }
 
 
@@ -135,7 +141,7 @@ class AttitudesController extends Controller
        $affected = Userattitude::where('user_notes', 'migrated OK')->count();
 
 
-        return view('userattitudes.migrate_likeables', compact('source','target','affected','overwrite_warning'))->with('itemkind', 'features');
+        return view('userattitudes.migrate_likeables', compact('source','target','affected','overwrite_warning','docounters'))->with('itemkind', 'features');
     }
 
 

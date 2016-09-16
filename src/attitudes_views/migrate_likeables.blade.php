@@ -55,20 +55,29 @@
 
 
 
-<div class="un_object">
+<div class="un_object un_flex un_flex_hs">
 	
-Commence the migration:
+<h2>Commence the migration:</h2>
+    <div>
+        
+        <a href="{{ URL::to(Request::url().'?perform=1') }}" class="btn btn-danger" target="_blank">
+          <i class="linkify icon"></i>
+          PERFORM
+        </a>
+    </div>
 
-            <a href="{{ URL::to(Request::url().'?perform=1') }}" class="btn btn-danger" target="_blank">
-              <i class="linkify icon"></i>
-              PERFORM
-            </a>
-
-            <a href="{{ URL::to(Request::url().'?perform=1&marker=1') }}" class="btn btn-danger" target="_blank">
-              <i class="linkify icon"></i>
-              PERFORM with the marker in `user_notes`
-            </a>
-
+    <div>
+        <a href="{{ URL::to(Request::url().'?perform=1&marker=1') }}" class="btn btn-danger" target="_blank">
+          <i class="linkify icon"></i>
+          PERFORM with the marker in `user_notes`
+        </a>
+    </div>
+    <div>
+        <a href="{{ URL::to(Request::url().'?docounters=1') }}" class="btn btn-danger" target="_blank">
+          <i class="linkify icon"></i>
+          Migrate the `likeable_like_counters` to `userattitudes_counters` table only.
+        </a>
+    </div>
 </div> 
 
 

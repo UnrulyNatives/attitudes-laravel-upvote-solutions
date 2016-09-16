@@ -2,15 +2,16 @@
 
 This is a complete upvote and downvote solution for Laravel >= 5.3 application.
 
+Contributors welcome. Any feature suggestions? Submit an issue.
+
 - Allows upvoting & downvoting, records short notes by the voting user
 - Allows migration of data from `rtconner/laravel-likeable`
 
 
 Current version: 
-[![Latest Stable Version](https://poser.pugx.org/unrulynatives/attitudes-laravel-upvote-solutions/v/stable)](https://packagist.org/packages/unrulynatives/attitudes-laravel-upvote-solutions)
+[![Latest Stable Version](https://poser.pugx.org/unrulynatives/attitudes/v/stable)](https://packagist.org/packages/unrulynatives/attitudes)
 
-
-Note: while the package does the job perfectly now, please give me some time to make the code look more professional. Contributors welcome!
+[![Total Downloads](https://poser.pugx.org/unrulynatives/attitudes/downloads)](https://packagist.org/packages/unrulynatives/attitudes)
 
 
 ## Features
@@ -19,13 +20,25 @@ Note: while the package does the job perfectly now, please give me some time to 
 
 - `importance` - might be used for observing and prioritizing content with values from range `0` to `10`.
 
-- `attitude` - might store values `-1`, `0`, `1` for likes and dislikes.
+- `attitude` - might store values `-1`, `0`, `1` for likes and dislikes. The scope of the values upt o developer's solution.
 
-- `activated` - might store values `-1`, `0`, `1` for likes and dislikes.
+- `activated` - might store values `-1`, `0`, `1` for content filtering features.
 
 - `favoritetype_id` - Just a scaffold for future development. An item might be stored in favorites under a certain subcategory. `null` would mean the root folder. This feature would require an extra model `Favoritetype`.
 
 - `user_notes` - allows user to take notes concerning a model (still to do)
+
+
+## To do
+
+- functions for votes counters
+- example views for various cases of voting counters
+- example for adding user notes
+- splitting the collection used for migrating from rtconner - now it submits to php timeout limits
+
+
+## Conntributing
+ while the package does the job perfectly now, please give me some time to make the code look more professional. Contributors welcome!
 
 
 ## Installation
@@ -192,6 +205,7 @@ An online demo is available at http://dev.unrulynatives.com/attitudes-demo
 
 ## Data migration from other packages
 
+Added feature to migrate data from rtconner's package. See url `attitudes-migrate-likeable`
 
 
 
