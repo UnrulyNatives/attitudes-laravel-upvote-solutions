@@ -1,4 +1,4 @@
-@extends('unattitudes.layouts.master_bootstrap_scaffold')
+@extends('userattitudes.layouts.master_bootstrap_scaffold')
 
 
 @section('content')
@@ -22,15 +22,9 @@
                 <button class = 'btn btn-primary' type = 'submit'>Create New Quote</button>
             </form>
         <div class="communique-info communique-cleared" id="">
-            <h4>New quotes</h4>
-            <p>New quotes are added in the package's controller. </p>
+            <h4>No quotes?</h4>
+            <p>Run `phpartisan db:seed` or in controller uncomment the code which adds randomly generated rows.</p>
 
-       @if(Auth::check())
-       <a href="{{URL::to('login')}}" class="btn btn-success">logged correctly!</a>
-       @else
-       not logged
-       <a href="{{URL::to('login')}}" class="btn btn-danger">Login</a>
-       @endif
 
         </div>
 

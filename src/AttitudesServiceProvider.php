@@ -46,7 +46,7 @@ class AttitudesServiceProvider extends ServiceProvider
 
         $this->publishes([
         // publish migrations for all registered packages 
-            __DIR__.'/unstarter_migrations' => base_path('database/migrations')
+            __DIR__.'/attitudes_migrations' => base_path('database/migrations')
 
 
         ], 'migrations');
@@ -54,7 +54,7 @@ class AttitudesServiceProvider extends ServiceProvider
 
         $this->publishes([
             // publish seeds for all registered packages 
-            __DIR__.'/unstarter_seeds' => base_path('database/seeds'),
+            __DIR__.'/attitudes_seeds' => base_path('database/seeds'),
         ], 'seeds');
 
 

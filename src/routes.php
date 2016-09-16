@@ -4,15 +4,24 @@
 
 Route::group(['middleware' => 'web'], function () {
 
-
+// just for testing purposes, obsolete
 Route::get('timezonesa/{timezone}', 
   'UnrulyNatives\Attitudes\AttitudesController@index');
 
+
+// Docs and explanations
 Route::get('attitudes-docs', 
   'UnrulyNatives\Attitudes\AttitudesController@docs');
 
+
+// A working demo
 Route::get('attitudes-demo', 
   'UnrulyNatives\Attitudes\AttitudesController@demo');
+
+
+// Data migration from rtconner/likeable
+Route::get('attitudes-migrate-likeable', 
+  'UnrulyNatives\Attitudes\AttitudesController@migrate_likeables');
 
 
 

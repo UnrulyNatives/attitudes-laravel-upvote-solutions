@@ -1,7 +1,9 @@
-# This is a complete upvote and downvote solution for Laravel >= 5.3 application
+# What it is
 
-This package delivers several solutions working in the same BD table. Pick and use all or the one which meets your needs. 
+This is a complete upvote and downvote solution for Laravel >= 5.3 application.
 
+- Allows upvoting & downvoting, records short notes by the voting user
+- Allows migration of data from `rtconner/laravel-likeable`
 
 
 Current version: 
@@ -13,18 +15,17 @@ Note: while the package does the job perfectly now, please give me some time to 
 
 ## Features
 
-Three different values available for storing likes and upvotes
+- This package delivers several solutions working in the same DB table. Pick and use all or the one which meets your needs. Three different values available for storing likes and upvotes
 
+- `importance` - might be used for observing and prioritizing content with values from range `0` to `10`.
 
-    - `importance` - might be used for observing and prioritizing content with values from range `0` to `10`.
+- `attitude` - might store values `-1`, `0`, `1` for likes and dislikes.
 
-    - `attitude` - might store values `-1`, `0`, `1` for likes and dislikes.
+- `activated` - might store values `-1`, `0`, `1` for likes and dislikes.
 
-    - `activated` - might store values `-1`, `0`, `1` for likes and dislikes.
+- `favoritetype_id` - Just a scaffold for future development. An item might be stored in favorites under a certain subcategory. `null` would mean the root folder. This feature would require an extra model `Favoritetype`.
 
-    - `favoritetype_id` - Just a scaffold for future development. An item might be stored in favorites under a certain subcategory. `null` would mean the root folder. This feature would require an extra model `Favoritetype`.
-
-
+- `user_notes` - allows user to take notes concerning a model (still to do)
 
 
 ## Installation
@@ -81,6 +82,17 @@ Add these  functions to your model, in which you wish to use voting system (this
 `php artisan vendor:publish --provider="Unrulynatives\Attitudes\AttitudesServiceProvider" --force`
 
 Now run the migrations with command `php artisan migrate`. Verify that the table `userattitudes` was created.
+
+
+$a. (optional)
+
+While the DB in demonstration page will be seeded by controller function, you can also seed the DB here. 
+
+in your `\database\seeds\DatabaseSeeder.php` `run()` function declare this seed file:
+`\database\seeds\UnAQuotationsTableSeeder.php` and run `php artisan db:seed`.
+
+
+UnAQuotationsTableSeeder
 
 5. (unfinished) Update your models with this package's trait.
 
@@ -169,13 +181,17 @@ Be sure that the head of your page contains the below declaration, otherwise you
 
 11. That's it! Now  user choices should be stored in the database table `userattitudes`.
 
-12. Working demo. 
+## Working demo. 
 
 If you installed this package correctly, point your browser to `attitudes-demo`.
 - You should be logged in
 - you sould have the `app\Models\Feature` model defined and at least one record in your database present. You can just simply use your own model for your test run - it's up to you.
 
 An online demo is available at http://dev.unrulynatives.com/attitudes-demo
+
+
+## Data migration from other packages
+
 
 
 

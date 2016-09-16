@@ -87,7 +87,7 @@ class AttitudesController extends Controller
             $model = $class->find($id);
         }
 
-        // $user_id = Auth::id()->id;
+        // $user_id = Auth::id();
         $object = $model->importances()->where('creator_id', Auth::id())->first();
         if (!$object) {
             $object = new Userattitude;
