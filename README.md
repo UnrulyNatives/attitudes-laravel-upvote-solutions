@@ -4,31 +4,30 @@ This is a complete upvote and downvote solution for Laravel >= 5.3 application.
 
 Contributors welcome. Any feature suggestions? Submit an issue.
 
-- Allows upvoting & downvoting, 
-- records memos (comments) by the voting user in the same table
-- Allows migration of data from `rtconner/laravel-likeable`
-- allows assigning objects to favorite categories (only one per voted object though)
+- Allows upvoting & downvoting, binary or multiple steps. 
+- Records memos (comments) by the voting user in the same table.
+- Out-of-the-box migration tool for data from `rtconner/laravel-likeable` package.
+- Allows assigning objects to favorite categories (only one per voted object though).
 
 Current version: 
 
 [![Latest Stable Version](https://poser.pugx.org/unrulynatives/attitudes/v/stable)](https://packagist.org/packages/unrulynatives/attitudes)
-
 [![Total Downloads](https://poser.pugx.org/unrulynatives/attitudes/downloads)](https://packagist.org/packages/unrulynatives/attitudes)
 
 
 ## Features
 
-- This package delivers several solutions working in the same DB table. Pick and use all or the one which meets your needs. Three different values available for storing likes and upvotes.
+This package delivers several solutions working in the same DB table. Pick one or use all to get functionality you need. Three values available for storing likes and upvotes are up to you: binary, negative value or `null`.
 
-- `importance` - might be used for observing and prioritizing content with values from range `0` to `10`, or just any.
+- `importance` - might be used for observing and prioritizing content with values from range `0` to `10`, or just any, including negative.
 
-- `attitude` - might store values `-1`, `0`, `1` for likes and dislikes. The scope of the values can be decided by developer, e. `-2` for hate and `-3` for going Berserk over the object is possible.
+- `attitude` - might store values `-1`, `0`, `1` for dislikes and likes (upvotes and downvotes). As above, the scope of the values can be decided by developer, e. `-2` for hate and `-3` for going Berserk over the object is possible.
 
-- `activated` - might store values `-1`, `0`, `1` for content filtering features.
+- `activated` - just to give an example the field might store values `-1`, `0`, `1`. Useful for  for content filtering features.
 
 - `favoritetype_id` - Just a scaffold for future development. An item might be stored in favorites under a certain subcategory. `null` would mean the root folder. This feature would require an extra model `Favoritetype`.
 
-- `user_notes` - allows user to take notes concerning a model (still to do).
+- `user_notes` - allows user to take notes concerning a model (still to do). I suggest a maximum number of characters at 150, so that the table won't be heavy.
 
 
 ## To do
@@ -54,10 +53,20 @@ Current version:
     `Unrulynatives\Attitudes\AttitudesServiceProvider::class,`
     
 
-3. Update your `User.php` model with this package's trait. (currently in non-working condition!)
+3. In your `User.php` model register this trait. 
 
 
+```
+    use Unrulynatives\Attitudes\AttitudeUserExtensions;
 
+
+    class User extends Authenticatable
+    {
+
+    use AttitudeUserExtensions;
+```
+
+The trait will make these two functions available. (As an alternative, you can implement them directly in the model file.)
 ```
 
     
@@ -71,7 +80,19 @@ Current version:
 
 ```
 
-Add these  functions to your model, in which you wish to use voting system (this package's trait is still not developed, contributors welcome!)
+
+To all models you want to enable the voting ystem, register this trait:
+
+```
+use Unrulynatives\Attitudes\UserAttitudes;
+
+class Yourmodelname extends Model  {
+
+
+    use UserAttitudes;
+```
+
+The trait will make these two functions available. (As an alternative, you can implement them directly in the model file.)
 ```
     
     public function importances() {
@@ -100,7 +121,10 @@ Add these  functions to your model, in which you wish to use voting system (this
 Now run the migrations with command `php artisan migrate`. Verify that the table `userattitudes` was created.
 
 
-$a. (optional)
+Note: make sure to make your adjustments on copies, as newer version of this package might overwrite your changes (note the `--force` option in the publish command.)
+
+
+4a. (optional)
 
 While the DB in demonstration page will be seeded by controller function, you can also seed the DB here. 
 
@@ -209,6 +233,40 @@ An online demo is available at http://dev.unrulynatives.com/attitudes-demo
 ## Data migration from other packages
 
 Added feature to migrate data from rtconner's package. See url `attitudes-migrate-likeable`
+
+
+
+## Usage & Examples
+
+### Counters
+
+`$this->countallvotes` - prints total number of votes cast by all users
+`$this->countdownvotes`- prints total number of DOWN-votes cast by all users
+`$this->countupvotes`- prints total number of UP-votes cast by all users
+
+
+### backend
+
+IMPORTANT NOTE: In this package the assumed convention for model names is singular with capitalized first letter.
+Mind the variable `itemkind`. It MUST be plural form of your model name.
+If you have another system, you must rework the backend solutions of this package.
+
+### Frontend
+
+After publishing the views, in your app's `resources/views/` folder you will find a folder `userattitudes`. Inside you will find several files. In files included by the below templates you can define classes for your voting buttons and model affected by them. 
+To have everything work well, start with including
+
+`@include('userattitudes.set_attitudes_2')` 
+(works with Bootstrap 4 and font Awesome (for thumbs up & down icons))
+
+
+
+
+
+Other frontend solutions
+`@include('userattitudes.set_attitudes_1')` will work nice with 
+(works well with the UnrulyNatives Starter Kit package - need extra icon fonts installed)
+
 
 
 

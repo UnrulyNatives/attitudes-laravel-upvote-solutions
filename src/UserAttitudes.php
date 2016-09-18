@@ -49,11 +49,49 @@ trait UserAttitudes
         // User::observe(new UserActionsObserver);
     }
 
-    public function getAllattitudescountAttribute() {
+
+    // print $this->userattitudestest to check if the trait has integrated successfully
+    public function getUserattitudestestAttribute() {
         
-        return "testing if the package is correctly integrated";
+        return "The trait has integrated successfully!";
     }
 
+
+    // gives count of ALL votes casts by users (including neutral votes (`attitude` =0))
+    public function getCountallvotesAttribute()
+    {
+        return $this->morphMany(\App\Models\Userattitude::class, 'item')->count();
+    }
+    // gives count of all UPvotes casts by users
+    public function getCountupvotesAttribute()
+    {
+        return $this->morphMany(\App\Models\Userattitude::class, 'item')->where('attitude', '>',0)->count();
+    }
+    // gives count of all DOWNvotes casts by users
+    public function getCountdownvotesAttribute()
+    {
+        return $this->morphMany(\App\Models\Userattitude::class, 'item')->where('attitude', '<',0)->count();
+    }
+
+
+
+    // IMPORTANCES and ATTITUDES are for the purpose of Userattitudes and Exemplarattitudes. They are our sustem of upvoting and downvoting
+    public function importances()
+    {
+        return $this->morphMany(\App\Models\Userattitude::class, 'item');
+    }
+
+
+    public function attitudes()
+    {
+        return $this->morphMany(\App\Models\Userattitude::class, 'item');
+    }
+
+
+    public function user_approach($user)
+    {
+        return $this->morphMany(\App\Models\Userattitude::class, 'item')->where('creator_id', ($user ? $user->id : NULL))->first();
+    }
 
 }
 
