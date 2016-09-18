@@ -3,17 +3,6 @@
 namespace UnrulyNatives\Attitudes;
 
 
-// use Illuminate\Auth\Authenticatable;
-// use Illuminate\Auth\Passwords\CanResetPassword;
-// use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-// use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-// use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-// use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Foundation\Auth\Access\Authorizable;
-// use App\Role;
-// use Laraveldaily\Quickadmin\Observers\UserActionsObserver;
-// use Laraveldaily\Quickadmin\Traits\AdminPermissionsTrait;
-// use Spatie\Permission\Traits\HasRoles;
 
 trait UserAttitudes  
 
@@ -44,7 +33,7 @@ trait UserAttitudes
 
     public static function boot()
     {
-        parent::boot();
+        // parent::boot();
 
         // User::observe(new UserActionsObserver);
     }
