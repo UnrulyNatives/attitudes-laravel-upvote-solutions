@@ -31,7 +31,7 @@ trait UserAttitudes
      */
     // protected $hidden = ['password', 'remember_token'];
 
-    public static function boot()
+    public static function bootUserAttitudes()
     {
         // parent::boot();
 
