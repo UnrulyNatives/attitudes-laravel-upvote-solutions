@@ -19,6 +19,11 @@ Route::get('attitudes-demo',
   'UnrulyNatives\Attitudes\AttitudesController@demo');
 
 
+// A working demo
+Route::get('attitudes-dashboard', 
+  'UnrulyNatives\Attitudes\AttitudesController@dashboard');
+
+
 // Data migration from rtconner/likeable
 Route::get('attitudes-migrate-likeable', 
   'UnrulyNatives\Attitudes\AttitudesController@migrate_likeables');

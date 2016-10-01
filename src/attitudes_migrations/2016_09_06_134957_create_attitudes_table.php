@@ -22,6 +22,7 @@ class CreateAttitudesTable extends Migration
             $table->integer('importance')->nullable()->default(null);
             $table->boolean('attitude')->nullable()->default(null);
             $table->boolean('activated')->nullable()->default(1);
+            $table->boolean('basket')->nullable()->default(null);
             $table->integer('favoritetype_id')->nullable()->default(1);
             $table->text('user_notes', 65535)->nullable();
 

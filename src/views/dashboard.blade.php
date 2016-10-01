@@ -46,13 +46,7 @@
                     not logged in--
                 @endif
 
-                Dashboard: 
-                    <a href="{{ URL::to('attitudes-dashboard') }}" class="ui labeled icon button" target="_blank">
-                      <i class="linkify icon"></i>
-                      Stackoverflow
-                    </a>
-                
-                
+
                 {{-- Gravatar: <img src="{{ Auth::user()->gravatar }}"> --}}
             </div>
         </div>

@@ -35,6 +35,14 @@ class AttitudesController extends Controller
     }
 
 
+
+    public function dashboard()
+    {
+
+        return view('attitudes::dashboard', compact('current_time'));
+    }
+
+
     public function demo($timezone = NULL)
     {
         $current_time = ($timezone)

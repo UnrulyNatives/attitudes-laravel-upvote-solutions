@@ -82,5 +82,56 @@ trait UserAttitudes
         return $this->morphMany(\App\Models\Userattitude::class, 'item')->where('creator_id', ($user ? $user->id : NULL))->first();
     }
 
+
+
+
+    // gets collection of model liked by given user
+    // example query: $quotations = Quotation::whereUpvotedBy(Auth::id())->get();
+    public function scopeWhereUpvotedBy($query, $userId=null)
+    {
+        if(is_null($userId)) {
+
+            $userId = Auth::id();
+        }
+        
+        return $query->whereHas('attitudes', function($q) use($userId) {
+            $q->where('creator_id', '=', $userId);
+            $q->where('attitude', '=', 1);
+        });
+    }
+
+
+    public function scopeWhereDownvotedBy($query, $userId=null)
+    {
+        if(is_null($userId)) {
+
+            $userId = Auth::id();
+        }
+        
+        return $query->whereHas('attitudes', function($q) use($userId) {
+            $q->where('creator_id', '=', $userId);
+            $q->where('attitude', '=', '-1');
+        });
+    }
+
+
+    public function scopeWhereVotedBy($query, $userId=null)
+    {
+        if(is_null($userId)) {
+
+            $userId = Auth::id();
+        }
+        
+        return $query->whereHas('attitudes', function($q) use($userId) {
+            $q->where('creator_id', '=', $userId);
+
+        });
+    }
+
+
+
+
+
+
 }
 

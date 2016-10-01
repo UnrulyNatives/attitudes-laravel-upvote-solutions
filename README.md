@@ -1,21 +1,22 @@
 # What it is
 
-This is a complete upvote and downvote solution for Laravel >= 5.3 application.
-
-Contributors welcome. Any feature suggestions? Submit an issue.
+This is a complete upvote and downvote solution for Laravel >= 5.3.
 
 - Allows upvoting & downvoting, binary or multiple steps. 
 - Records memos (comments) by the voting user in the same table.
 - Out-of-the-box migration tool for data from `rtconner/laravel-likeable` package.
 - Allows assigning objects to favorite categories (only one per voted object though).
 
-Current version: 
+
+Contributors welcome. Any feature suggestions? Submit an issue. 
+
+### Current version: 
 
 [![Latest Stable Version](https://poser.pugx.org/unrulynatives/attitudes/v/stable)](https://packagist.org/packages/unrulynatives/attitudes)
 [![Total Downloads](https://poser.pugx.org/unrulynatives/attitudes/downloads)](https://packagist.org/packages/unrulynatives/attitudes)
 
 
-## Features
+## List of all features
 
 This package delivers several solutions working in the same DB table. Pick one or use all to get functionality you need. Three values available for storing likes and upvotes are up to you: binary, negative value or `null`.
 
@@ -57,13 +58,13 @@ This package delivers several solutions working in the same DB table. Pick one o
 
 
 ```
-    use Unrulynatives\Attitudes\AttitudeUserExtensions;
+    use Unrulynatives\Attitudes\AttitudesUserExtensions;
 
 
     class User extends Authenticatable
     {
 
-    use AttitudeUserExtensions;
+    use AttitudesUserExtensions;
 ```
 
 The trait will make these two functions available. (As an alternative, you can implement them directly in the model file.)
@@ -80,6 +81,7 @@ The trait will make these two functions available. (As an alternative, you can i
 
 ```
 
+4. Register trait in your models
 
 To all models you want to enable the voting ystem, register this trait:
 
@@ -88,11 +90,10 @@ use Unrulynatives\Attitudes\UserAttitudes;
 
 class Yourmodelname extends Model  {
 
-
     use UserAttitudes;
 ```
 
-The trait will make these two functions available. (As an alternative, you can implement them directly in the model file.)
+The trait will make the below three functions available. (As an alternative, you can implement them directly in the model file.)
 ```
     
     public function importances() {
@@ -114,17 +115,20 @@ The trait will make these two functions available. (As an alternative, you can i
 
 ```
 
-4. Publish migrations, views, controller and other assets from this package into your Laravel app:
+5. Publish assets
+Publish migrations, views, controller and other assets from this package into your Laravel app:
 
 `php artisan vendor:publish --provider="Unrulynatives\Attitudes\AttitudesServiceProvider" --force`
 
+
+6. Run migrations
 Now run the migrations with command `php artisan migrate`. Verify that the table `userattitudes` was created.
 
 
 Note: make sure to make your adjustments on copies, as newer version of this package might overwrite your changes (note the `--force` option in the publish command.)
 
 
-4a. (optional)
+7. (optional) Setup the demo feature 
 
 While the DB in demonstration page will be seeded by controller function, you can also seed the DB here. 
 
@@ -132,34 +136,9 @@ in your `\database\seeds\DatabaseSeeder.php` `run()` function declare this seed 
 `\database\seeds\UnAQuotationsTableSeeder.php` and run `php artisan db:seed`.
 
 
-UnAQuotationsTableSeeder
-
-5. (unfinished) Update your models with this package's trait.
-
-This package's trait is still under development. For now just paste the below functions to the models for which you wish to enable:
 
 ```
-
-    // IMPORTANCES and ATTITUDES are for the purpose of Userattitudes and Exemplarattitudes. They are our sustem of upvoting and downvoting
-    public function importances()
-    {
-        return $this->morphMany(\App\Models\Userattitude::class, 'item');
-    }
-
-
-    public function attitudes()
-    {
-        return $this->morphMany(\App\Models\Userattitude::class, 'item');
-    }
-
-    public function user_approach($user)
-    {
-        return $this->morphMany(\App\Models\Userattitude::class, 'item')->where('creator_id', ($user ? $user->id : NULL))->first();
-    }
-
-
-```
-6. Routes (optional)
+8. (optional) Use your own routes 
 
 Properly working routes necessary for this package to work are locatad within ths package:
 
@@ -171,7 +150,9 @@ Route::any('{itemkind}/{id}/set_user_importance', ['as' => 'attitudes.set_user_i
 You can put them in your location of choice, but make sure that the new location is parsed first. In case of problems, reverse the order of service providers of this package and `App\Providers\RouteServiceProvider::class,`
 
 
-7. Attach the js and css files to your template. Mind the file paths if you decide to place them somewhere else than they are published to.
+9. Attach the js and css files to your template. 
+
+Mind the file paths if you decide to place them somewhere else than they are published to.
 
 ```
 <link href="{{URL::to('css/unrulynatives_attitudes.css')}}" rel="stylesheet">
@@ -179,7 +160,9 @@ You can put them in your location of choice, but make sure that the new location
 <script type="text/javascript" src="{{URL::to('js/minitool_attitudes.js')}}"></script>
 ```
 
-8. Include the below view files in your `foreach` loop. Note that the looped variable should be changed accordingly. Here I use `$o->`.
+
+
+10. Include the below view files in your `foreach` loop. Note that the looped variable should be changed accordingly. Here I use `$o->`.
 
 ```
     <?php $itemkind = 'quotes'; ?> // features is a name of your model
@@ -191,7 +174,7 @@ You can put them in your location of choice, but make sure that the new location
 ```
 Note: `itemkind` is plural lovercase name of your model. Take a look at the controller function: the `itemkind` name is changed into class name in order to process your request.
 
-9. Define the morph class
+11. Define the morph class
 The models which are attituded should have the morph class defined. The names are stored in the DB table `userattitudes` in column `item_type`.
 I myself define the morph class definitions manually, just to be sure that Laravel functions won't use some unusual defaults. 
 Do it in `app\Providers\AppServiceProvider.php`. Use the instructions in https://laravel.com/docs/5.3/upgrade.
@@ -215,11 +198,14 @@ use Illuminate\Database\Eloquent\Relations\Relation;
     }
 ```
 
-10. Define a csrf token
+12. Define a csrf token
 Be sure that the head of your page contains the below declaration, otherwise you will meet with unexpected behavior of the script:
 `<meta name="csrf-token" content="{{ csrf_token() }}" />`
 
-11. That's it! Now  user choices should be stored in the database table `userattitudes`.
+
+### That's it! Now  user choices should be stored in the database table `userattitudes`.
+
+
 
 ## Working demo. 
 
@@ -238,11 +224,19 @@ Added feature to migrate data from rtconner's package. See url `attitudes-migrat
 
 ## Usage & Examples
 
-### Counters
+### Count total votes of an object
 
 `$this->countallvotes` - prints total number of votes cast by all users
 `$this->countdownvotes`- prints total number of DOWN-votes cast by all users
 `$this->countupvotes`- prints total number of UP-votes cast by all users
+
+
+### collections
+- `Quotation::whereUpvotedBy(Auth::id())->get();` // collection of Quotations upvoted by the user
+- `Quotation::whereDownvotedBy(Auth::id())->get();` // collection of Quotations downvoted by the user
+- `Quotation::whereVotedBy(Auth::id())->get();` // collection of Quotations voted in any way by the user (mind that the function counts records existing in DB, so it includes `null` and `0`)
+
+
 
 
 ### backend
