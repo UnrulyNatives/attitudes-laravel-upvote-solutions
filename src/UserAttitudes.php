@@ -2,7 +2,7 @@
 
 namespace UnrulyNatives\Attitudes;
 
-
+use Auth;
 
 trait UserAttitudes  
 
@@ -89,13 +89,10 @@ trait UserAttitudes
     // example query: $quotations = Quotation::whereUpvotedBy(Auth::id())->get();
     public function scopeWhereUpvotedBy($query, $userId=null)
     {
-        if(is_null($userId)) {
 
-            $userId = Auth::id();
-        }
         
         return $query->whereHas('attitudes', function($q) use($userId) {
-            $q->where('creator_id', '=', $userId);
+            $q->where('creator_id', '=', Auth::id());
             $q->where('attitude', '=', 1);
         });
     }
@@ -103,13 +100,10 @@ trait UserAttitudes
 
     public function scopeWhereDownvotedBy($query, $userId=null)
     {
-        if(is_null($userId)) {
 
-            $userId = Auth::id();
-        }
         
         return $query->whereHas('attitudes', function($q) use($userId) {
-            $q->where('creator_id', '=', $userId);
+            $q->where('creator_id', '=', Auth::id());
             $q->where('attitude', '=', '-1');
         });
     }
@@ -117,13 +111,10 @@ trait UserAttitudes
 
     public function scopeWhereVotedBy($query, $userId=null)
     {
-        if(is_null($userId)) {
 
-            $userId = Auth::id();
-        }
         
         return $query->whereHas('attitudes', function($q) use($userId) {
-            $q->where('creator_id', '=', $userId);
+            $q->where('creator_id', '=', Auth::id());
 
         });
     }
